@@ -1,4 +1,5 @@
-// C++ implementation of the approach 
+/* Copyright (C) 2020 Marco B. Shafer. All rights reserved.*/
+
 #include <bits/stdc++.h> 
 using namespace std; 
 
@@ -11,7 +12,7 @@ enum State {
 class Node {
 	friend class Graph;
     
-    public:
+        public:
 		Node(int d)
 		{
 			data = d;
@@ -23,7 +24,7 @@ class Node {
 		State getState() const{
 			return state;
 		}
-	
+    
 	private:
 		int data;
 		State state;
