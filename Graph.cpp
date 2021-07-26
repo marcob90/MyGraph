@@ -1,3 +1,6 @@
+/* Copyright (C) 2020 Marco B. Shafer. All rights reserved.*/
+
+
 #include "Graph.h"
 
 // Function to fill the empty adjacency matrix 
@@ -86,7 +89,7 @@ bool Graph::findPath(Node *start, Node *end)
 	resetStates();
 	queue<Node*> q;
 
-    start->setState(VISITING);
+        start->setState(VISITING);
 	q.push(start);
   	
 	while(!q.empty()){
