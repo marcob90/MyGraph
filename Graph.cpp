@@ -1,6 +1,7 @@
 /* Copyright (C) 2020 Marco B. Shafer. All rights reserved.*/
 
-
+#include <iostream>
+#include <queue>
 #include "Graph.h"
 
 // Function to fill the empty adjacency matrix 
@@ -10,9 +11,9 @@ isDirected(d)
 
 } 
 
-vector<Node*> Graph::getAdjNodes(Node *start) const
+std::vector<Node*> Graph::getAdjNodes(Node *start) const
 {
-	vector<Node*> adjNodes;
+	std::vector<Node*> adjNodes;
 
 	for(auto &x : ( *(nodes.find(start) ) )->children)
 		adjNodes.push_back(x);
@@ -35,9 +36,9 @@ void Graph::addEdge(Node *start, Node *end)
 // Function to perform DFS on the graph 
 void Graph::DFS(Node *start) const
 { 
-    static unordered_set<Node*> visited;
+    static std::unordered_set<Node*> visited;
     // Print the current node 
-    cout << start->data << " "; 
+    std::cout << start->data << " "; 
   
     // Set current node as visited 
     visited.insert(start);
@@ -55,26 +56,26 @@ void Graph::DFS(Node *start) const
 
 void Graph::BFS(Node *start)
 { 
-	queue<Node*> q;
+	std::queue<Node*> q;
 	resetStates();
 
-    start->setState(VISITING);
+        start->setState(VISITING);
 	q.push(start);
   	
 	while(!q.empty()){
 		Node *vis = q.front();
-		cout << vis->data << " ";
+		std::cout << vis->data << " ";
 		
 		q.pop();
 		
 		for (auto &n : getAdjNodes(vis)) { 
 		
-	        // If some node is adjacent to the current node 
-	        // and it has not already been visited 
-        	if(n->getState() == UNVISITED) { 
+	           // If some node is adjacent to the current node 
+	           // and it has not already been visited 
+        	   if(n->getState() == UNVISITED) { 
 				q.push(n);
 				n->setState(VISITING);
-			}
+	           }
 		}
 		vis->setState(VISITED);
 	}
@@ -87,7 +88,7 @@ bool Graph::findPath(Node *start, Node *end)
 	if(start == end) return true;
 	
 	resetStates();
-	queue<Node*> q;
+	std::queue<Node*> q;
 
         start->setState(VISITING);
 	q.push(start);
@@ -98,13 +99,13 @@ bool Graph::findPath(Node *start, Node *end)
 		
 		for (auto &n : getAdjNodes(node)) { 
 		
-	        // If some node is adjacent to the current node 
-	        // and it is unvisited
-        	if(n->getState() == UNVISITED) {
-				if(n == end) return true; 
+	           // If some node is adjacent to the current node 
+	           // and it is unvisited
+        	   if(n->getState() == UNVISITED) {
+			        if(n == end) return true; 
 				q.push(n);
 				n->setState(VISITING);
-			}
+	           }
 		}
 		node->setState(VISITED);	
 	}
@@ -114,8 +115,8 @@ bool Graph::findPath(Node *start, Node *end)
 
 bool Graph::thereIsCycle() const
 {
-	unordered_set<Node*> visited;
-	unordered_set<Node*> s;
+	std::unordered_set<Node*> visited;
+	std::unordered_set<Node*> s;
 	
 	for(auto &node : nodes){
 		if(isDirected ? thereIsCycle(node, visited, s) : thereIsCycle(node, visited))
@@ -126,7 +127,7 @@ bool Graph::thereIsCycle() const
 }
 
 //util function to detect cycles in directed graph
-bool Graph::thereIsCycle(Node *start, unordered_set<Node*> &visited, unordered_set<Node*> &s) const
+bool Graph::thereIsCycle(Node *start, std::unordered_set<Node*> &visited, std::unordered_set<Node*> &s) const
 {
 	//if node is already visited
 	if(visited.find(start) != visited.end())
@@ -153,7 +154,7 @@ bool Graph::thereIsCycle(Node *start, unordered_set<Node*> &visited, unordered_s
 }
 
 //util function to detect cycles in undirected graph
-bool Graph::thereIsCycle(Node *start, unordered_set<Node*> &visited, Node* parent) const
+bool Graph::thereIsCycle(Node *start, std::unordered_set<Node*> &visited, Node* parent) const
 {
 	//if node is already visited
 	if(visited.find(start) != visited.end())
